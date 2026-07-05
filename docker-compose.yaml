@@ -1,0 +1,7 @@
+services:
+  alquimia:
+    build: .
+    container_name: alquimia
+    ports:
+      - "4200:4200"
+    restart: unless-stopped
