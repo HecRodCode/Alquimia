@@ -1,0 +1,21 @@
+<div class="section">
+  <button
+    type="button"
+    class="section__header"
+    [attr.aria-expanded]="open()"
+    [attr.aria-controls]="contentId"
+    (click)="toggle()"
+  >
+    <span class="section__title">
+      @if (icon()) {
+        <span class="section__icon" aria-hidden="true">{{ icon() }}</span>
+      }
+      {{ title() }}
+    </span>
+    <span class="section__chevron" [class.section__chevron--open]="open()" aria-hidden="true">⌄</span>
+  </button>
+
+  <div class="section__content" [id]="contentId" [hidden]="!open()">
+    <ng-content />
+  </div>
+</div>

@@ -1,0 +1,55 @@
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.stepper__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-line);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    filter 160ms ease-out,
+    transform 160ms ease-out;
+}
+
+.stepper__btn--add {
+  border: none;
+  background-color: var(--color-cta);
+  color: #fff;
+}
+
+.stepper__btn:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.stepper__btn--add:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.stepper__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.stepper__btn:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.stepper__value {
+  min-width: 22px;
+  text-align: center;
+  font-family: var(--font-register);
+  font-size: 18px;
+  font-weight: 700;
+}

@@ -1,0 +1,56 @@
+<div class="ticket">
+  <span class="ticket__spark ticket__spark--1" aria-hidden="true"></span>
+  <span class="ticket__spark ticket__spark--2" aria-hidden="true"></span>
+
+  <div class="ticket__check" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  </div>
+
+  <h1 class="ticket__title">¡Pedido listo para escanear!</h1>
+  <p class="ticket__sub">Muéstrale este código a tu mesero</p>
+
+  <ul class="ticket__items">
+    @for (item of order().items; track item.id) {
+      <li class="titem">
+        <div class="titem__thumb">
+          <img [src]="item.imageUrl" [alt]="item.productName" loading="lazy" />
+          <span class="titem__qty">{{ item.quantity }}x</span>
+        </div>
+        <div class="titem__info">
+          <span class="titem__name">{{ item.productName }}</span>
+          @if (summaryOf(item); as summary) {
+            <span class="titem__sum">{{ summary }}</span>
+          }
+        </div>
+        <span class="titem__price">{{ linePrice(item) }}</span>
+      </li>
+    }
+  </ul>
+
+  <div class="ticket__rule"></div>
+
+  <div class="ticket__total">
+    <span>TOTAL</span>
+    <span class="ticket__total-value">{{ totalLabel() }}</span>
+  </div>
+
+  <div class="ticket__qr">
+    <qrcode
+      [qrdata]="qrData()"
+      [width]="240"
+      [margin]="2"
+      errorCorrectionLevel="M"
+      alt="Código QR con tu pedido"
+    />
+  </div>
+
+  <div class="ticket__thanks">
+    <span class="ticket__thanks-icon" aria-hidden="true">🧾</span>
+    <div class="ticket__thanks-text">
+      <strong>Gracias por tu pedido</strong>
+      <span>¡Buen provecho de parte de Alquimia! ❤</span>
+    </div>
+  </div>
+</div>

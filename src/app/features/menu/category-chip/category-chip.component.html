@@ -1,0 +1,10 @@
+<button
+  type="button"
+  class="chip"
+  [class.chip--active]="active()"
+  [attr.aria-pressed]="active()"
+  (click)="select.emit()"
+>
+  <span class="chip__emoji" aria-hidden="true">{{ category().emoji }}</span>
+  <span class="chip__label">{{ category().name }}</span>
+</button>

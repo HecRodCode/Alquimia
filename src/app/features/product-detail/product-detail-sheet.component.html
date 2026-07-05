@@ -1,0 +1,149 @@
+<div class="backdrop" (click)="close.emit()"></div>
+
+<section class="sheet" role="dialog" aria-modal="true" aria-labelledby="pd-title">
+  <button #closeBtn type="button" class="sheet__close" aria-label="Cerrar" (click)="close.emit()">
+    ✕
+  </button>
+
+  <div class="sheet__scroll">
+    <div class="sheet__top">
+      <!-- Media -->
+      <div class="media">
+        @if (imageFailed()) {
+          <div class="media__placeholder" aria-hidden="true">{{ badge()?.icon ?? '🍽️' }}</div>
+        } @else {
+          <img
+            class="media__img"
+            [src]="product().imageUrl"
+            [alt]="product().name"
+            (error)="imageFailed.set(true)"
+          />
+        }
+        @if (badge(); as b) {
+          <span class="media__badge">
+            <span aria-hidden="true">{{ b.icon }}</span> {{ b.label }}
+          </span>
+        }
+      </div>
+
+      <!-- Encabezado -->
+      <div class="head">
+        <h2 class="head__name" id="pd-title">{{ product().name }}</h2>
+        <p class="head__desc">{{ product().description }}</p>
+        <p class="head__price">{{ basePriceLabel() }}</p>
+      </div>
+    </div>
+
+    <form class="form" [formGroup]="form">
+      @if (product().customization.sizes.length > 0) {
+        <div class="sizes">
+          <span class="sizes__label">
+            <span class="sizes__icon" aria-hidden="true">📏</span> Tamaño
+          </span>
+          <div class="segmented" role="radiogroup" aria-label="Tamaño">
+            @for (size of product().customization.sizes; track size.id) {
+              <button
+                type="button"
+                role="radio"
+                class="segmented__option"
+                [class.segmented__option--active]="selection().sizeId === size.id"
+                [attr.aria-checked]="selection().sizeId === size.id"
+                (click)="selectSize(size.id)"
+              >
+                <span>{{ size.label }}</span>
+                @if (size.priceDelta > 0) {
+                  <span class="segmented__delta">{{ priceLabel(size.priceDelta) }}</span>
+                }
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="cols">
+        @if (product().customization.extras.length > 0) {
+          <app-collapsible-section title="Adiciones" icon="🧀">
+            <ul class="options">
+              @for (extra of product().customization.extras; track extra.id) {
+                <li>
+                  <label class="option" [class.option--on]="isExtraSelected(extra.id)">
+                    <span class="option__icon" aria-hidden="true">{{ emojiForExtra(extra.label) }}</span>
+                    <span class="option__label">{{ extra.label }}</span>
+                    <span class="option__price">{{ priceLabel(extra.price) }}</span>
+                    <input
+                      type="checkbox"
+                      class="option__check"
+                      [checked]="isExtraSelected(extra.id)"
+                      (change)="toggleExtra(extra.id)"
+                    />
+                  </label>
+                </li>
+              }
+            </ul>
+          </app-collapsible-section>
+        }
+
+        @if (product().customization.removableIngredients.length > 0) {
+          <app-collapsible-section title="Quitar ingredientes" icon="🌿">
+            <ul class="options">
+              @for (ing of product().customization.removableIngredients; track ing.id) {
+                <li>
+                  <label class="option" [class.option--on]="isRemoved(ing.id)">
+                    <span class="option__label">Sin {{ ing.label.toLowerCase() }}</span>
+                    <input
+                      type="checkbox"
+                      class="option__check"
+                      [checked]="isRemoved(ing.id)"
+                      (change)="toggleRemoved(ing.id)"
+                    />
+                  </label>
+                </li>
+              }
+            </ul>
+          </app-collapsible-section>
+        }
+      </div>
+
+      @if (product().customization.allowsNotes) {
+        <app-collapsible-section title="Notas para la cocina" icon="✏️">
+          <textarea
+            class="notes"
+            formControlName="notes"
+            rows="2"
+            aria-label="Notas para la cocina"
+            placeholder="Ej: sin cebolla, bien cocido, salsa aparte…"
+          ></textarea>
+          <div class="chips-notes">
+            @for (s of noteSuggestions; track s) {
+              <button
+                type="button"
+                class="chip-note"
+                [attr.aria-label]="'Agregar nota: ' + s"
+                (click)="addNote(s)"
+              >
+                {{ s }} <span aria-hidden="true">+</span>
+              </button>
+            }
+          </div>
+        </app-collapsible-section>
+      }
+
+      <div class="qty">
+        <span class="qty__label">
+          <span class="qty__icon" aria-hidden="true">🧾</span> Cantidad
+        </span>
+        <app-quantity-stepper [(quantity)]="quantity" [label]="product().name" />
+      </div>
+    </form>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__total">
+      <span class="footer__total-label">Total</span>
+      <span class="footer__total-value">{{ totalLabel() }}</span>
+    </div>
+    <button type="button" class="cta" (click)="addToCart()">
+      <span class="cta__icon" aria-hidden="true">🛍️</span> Agregar al pedido
+    </button>
+  </footer>
+</section>

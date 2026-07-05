@@ -1,3 +1,96 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+:root {
+  /* Base neutra */
+  --color-paper: #efeae0;
+  --color-surface: #fbf9f4;
+  --color-ink: #241c15;
+  --color-ink-soft: #6b5e4f;
+  --color-line: #d8cfc0;
+  --color-cta: #d6392b;
+  --color-cta-hover: #b32e22;
+  --color-stamp: #b32e22;
+
+  /* Mundos por categoría */
+  --world-mariscos: #0e7c86;
+  --world-mariscos-soft: #dceeef;
+  --world-hamburguesas: #8b4a1e;
+  --world-hamburguesas-accent: #e3a72e;
+  --world-hamburguesas-soft: #f3e3c4;
+  --world-rapida: #e4572e;
+  --world-rapida-soft: #fbdfc9;
+  --world-bebidas: #7a3f8c;
+  --world-bebidas-soft: #ebddf0;
+  --world-postres: #c74b78;
+  --world-postres-soft: #f6dde6;
+
+  /* Tipografía */
+  --font-marquee: 'Bungee', sans-serif;
+  --font-register: 'Space Mono', monospace;
+  --font-body: 'Instrument Sans', -apple-system, sans-serif;
+  --font-stamp: 'Permanent Marker', cursive;
+
+  /* Espaciado (base 4px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* Radios */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(36, 28, 21, 0.08);
+  --shadow-md: 0 6px 16px rgba(36, 28, 21, 0.12);
+  --shadow-lg: 0 10px 28px rgba(36, 28, 21, 0.18);
+  --shadow-ticket: 0 14px 32px rgba(36, 28, 21, 0.22);
+
+  /* Breakpoints (referencia) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+[data-world='mariscos'] {
+  --accent: var(--world-mariscos);
+  --accent-soft: var(--world-mariscos-soft);
+}
+[data-world='hamburguesas'] {
+  --accent: var(--world-hamburguesas);
+  --accent-soft: var(--world-hamburguesas-soft);
+}
+[data-world='rapida'] {
+  --accent: var(--world-rapida);
+  --accent-soft: var(--world-rapida-soft);
+}
+[data-world='bebidas'] {
+  --accent: var(--world-bebidas);
+  --accent-soft: var(--world-bebidas-soft);
+}
+[data-world='postres'] {
+  --accent: var(--world-postres);
+  --accent-soft: var(--world-postres-soft);
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}

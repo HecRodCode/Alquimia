@@ -1,0 +1,81 @@
+<header class="topbar">
+  <div class="topbar__brand">
+    <span class="topbar__logo">ALQUIMIA</span>
+    <span class="topbar__mark" aria-hidden="true">{{ activeTheme().mascot }}</span>
+  </div>
+</header>
+
+<nav class="chips" aria-label="Categorías del menú">
+  @for (category of menu.categories(); track category.id) {
+    <app-category-chip
+      [category]="category"
+      [active]="category.id === activeCategoryId()"
+      (select)="selectCategory(category.id)"
+    />
+  }
+</nav>
+
+<main class="menu-main">
+  <!-- Hero temático de la sección activa -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__text">
+      <span class="hero__eyebrow">{{ activeTheme().eyebrow }}</span>
+      <h1 class="hero__title" id="hero-title">{{ activeTheme().title }}</h1>
+      <p class="hero__subtitle">{{ activeTheme().subtitle }}</p>
+    </div>
+    <div class="hero__deco" aria-hidden="true">
+      <span class="hero__note">{{ activeTheme().note }}</span>
+      <span class="hero__mascot">{{ activeTheme().mascot }}</span>
+    </div>
+  </section>
+
+  <div class="product-grid">
+    @for (product of visibleProducts(); track product.id) {
+      <app-product-card
+        [product]="product"
+        (open)="openProduct($event)"
+        (add)="quickAdd($event)"
+      />
+    } @empty {
+      <p class="empty">No hay productos en esta sección.</p>
+    }
+  </div>
+
+  <!-- Cross-sell hacia otros mundos -->
+  <section class="crosssell" aria-label="Otras categorías">
+    <div class="crosssell__text">
+      <h2 class="crosssell__title">¿Antojo de algo diferente?</h2>
+      <p class="crosssell__subtitle">Explora nuestras otras categorías.</p>
+      <button type="button" class="crosssell__btn" (click)="selectCategory(nextCategory().id)">
+        Ver {{ nextCategory().emoji }} {{ nextCategory().name }}
+      </button>
+    </div>
+    <div class="crosssell__thumbs">
+      @for (product of crossSell(); track product.id) {
+        <button
+          type="button"
+          class="crosssell__thumb"
+          [attr.data-world]="product.categoryId"
+          [attr.aria-label]="product.name"
+          (click)="openProduct(product)"
+        >
+          <img [src]="product.imageUrl" [alt]="product.name" loading="lazy" />
+        </button>
+      }
+    </div>
+  </section>
+</main>
+
+@defer (when selectedProduct() !== null) {
+  @if (selectedProduct(); as product) {
+    <app-product-detail-sheet
+      [product]="product"
+      (close)="closeSheet()"
+      (added)="closeSheet()"
+    />
+  }
+}
+
+<app-cart-fab (open)="openCart()" />
+
+<app-cart-panel [open]="cartOpen()" (close)="closeCart()" (finalize)="finalizeOrder()" />

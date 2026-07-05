@@ -1,0 +1,44 @@
+<article class="card">
+  <button type="button" class="card__media" (click)="open.emit(product())" [attr.aria-label]="product().name">
+    @defer (on viewport) {
+      @if (imageFailed()) {
+        <div class="card__placeholder" aria-hidden="true">{{ placeholderEmoji() }}</div>
+      } @else {
+        <img
+          class="card__img"
+          [src]="product().imageUrl"
+          [alt]="product().name"
+          loading="lazy"
+          (error)="imageFailed.set(true)"
+        />
+      }
+    } @placeholder {
+      <div class="card__placeholder" aria-hidden="true">{{ placeholderEmoji() }}</div>
+    }
+
+    @if (badge(); as b) {
+      <span class="card__badge">
+        <span aria-hidden="true">{{ b.icon }}</span> {{ b.label }}
+      </span>
+    }
+  </button>
+
+  <div class="card__body">
+    <button type="button" class="card__title-btn" (click)="open.emit(product())">
+      <span class="card__name">{{ product().name }}</span>
+      <span class="card__desc">{{ product().description }}</span>
+    </button>
+
+    <div class="card__foot">
+      <span class="card__price">{{ priceLabel() }}</span>
+      <button
+        type="button"
+        class="card__add"
+        [attr.aria-label]="'Agregar ' + product().name"
+        (click)="add.emit(product())"
+      >
+        +
+      </button>
+    </div>
+  </div>
+</article>

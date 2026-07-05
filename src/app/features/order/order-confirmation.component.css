@@ -1,0 +1,72 @@
+.confirm {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-4);
+  background-color: var(--color-paper);
+}
+
+.ticket-skeleton {
+  width: 360px;
+  height: 560px;
+  max-width: 100%;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-ticket);
+}
+
+.loading {
+  font-family: var(--font-register);
+  color: var(--color-ink-soft);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 320px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 180ms ease-out,
+    transform 180ms ease-out;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  border: none;
+  background-color: var(--color-cta);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: var(--color-cta-hover);
+}
+
+.btn--ghost {
+  border: 1.5px solid var(--color-line);
+  background-color: transparent;
+  color: var(--color-ink);
+}

@@ -1,0 +1,6 @@
+@if (cart.itemCount() > 0) {
+  <button type="button" class="fab" (click)="open.emit()" aria-label="Ver mi pedido">
+    <span class="fab__icon" aria-hidden="true">🧺</span>
+    <span class="fab__count">{{ cart.itemCount() }}</span>
+  </button>
+}

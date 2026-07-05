@@ -1,0 +1,21 @@
+<div class="stepper" role="group" [attr.aria-label]="label() ? 'Cantidad de ' + label() : 'Cantidad'">
+  <button
+    type="button"
+    class="stepper__btn"
+    [attr.aria-label]="decLabel()"
+    [disabled]="atMin()"
+    (click)="step(-1)"
+  >
+    −
+  </button>
+  <span class="stepper__value" aria-live="polite">{{ quantity() }}</span>
+  <button
+    type="button"
+    class="stepper__btn stepper__btn--add"
+    [attr.aria-label]="incLabel()"
+    [disabled]="atMax()"
+    (click)="step(1)"
+  >
+    +
+  </button>
+</div>
